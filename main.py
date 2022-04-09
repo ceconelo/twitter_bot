@@ -31,7 +31,7 @@ def main():
     query_ptax = 'BRL USD exchange rate  -is:retweet'
     query_ntnb = 'Tesouro IPCA+ com Juros Semestrais  -is:retweet'
 
-    response = api.tweet_to_publish(ptax, query_ptax)
+    response = api.tweet_to_publish(ntnb, query_ntnb)
     if response is not None:
         print('Successfully tweeted\n' + \
               f'Tweet ID: {response.data["id"]}')

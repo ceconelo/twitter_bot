@@ -71,17 +71,12 @@ def search_tweet_list(query, max_results):
 
 # Method responsible for posting the tweets
 def tweet_to_publish(text, query):
-    # Before posting we check if there are already tweets and if there are a maximum of 3
-    limit_tweet = 3
+    # Before posting we check if there are already tweets
     tweets, client = search_tweet_list(query, 10)
-    len_tweets = len(tweets)
     if tweets:
-        if len_tweets < limit_tweet:
-            # if it already exists we create a sequential post
-            # For this to happen we get the id of the tweet we want to follow
-            return client.create_tweet(text=text, in_reply_to_tweet_id=tweets[0]['id'])
-        else:
-            print('Post limit reached')
+        # if it already exists we create a sequential post
+        # For this to happen we get the id of the tweet we want to follow
+        return client.create_tweet(text=text, in_reply_to_tweet_id=tweets[0]['id'])
     else:
         # if there are no posts on the day we create a new post
         return client.create_tweet(text=text)
