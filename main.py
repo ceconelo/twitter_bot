@@ -12,13 +12,15 @@ from tweepy.errors import Unauthorized
 def main():
     # Samples text
     ptax = '''
-        BRL USD exchange rate
-        PTAX: cotação de compra
-        10:00h 4,7390
-        11:00h 4,7613
-        12:00h 4,7512
 
-        Post 1
+    BRL USD exchange rate
+    PTAX: cotação de compra
+    10:00h 4,7390
+    11:00h 4,7613
+    12:00h 4,7618
+    13:00h 4,7618
+   
+    
     '''
 
     ntnb = '''
@@ -35,7 +37,7 @@ def main():
     query_ntnb = 'Tesouro IPCA+ com Juros Semestrais  -is:retweet'
 
     try:
-        response = api.tweet_to_publish(ntnb, query_ntnb)
+        response = api.tweet_to_publish(ptax, query_ptax)
         if response is not None:
             print('Successfully tweeted\n' + \
                   f'Tweet ID: {response.data["id"]}')

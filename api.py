@@ -28,8 +28,23 @@ def get_client():
     return client
 
 
+def search_tweets_user(client, query, max_results):
+    start = datetime.today().strftime('%Y-%m-%dT') + '03:00:00Z'
+    tweets = client.get_users_tweets(client.get_me().data.id, max_results=max_results, start_time=start)
+    tweet_data = tweets.data
+    results = []
+    if not tweet_data is None and len(tweet_data) > 0:
+        for tweet in tweet_data:
+            if tweet.text.split('\n')[0] == query.split('-')[0].strip():
+                results.append({
+                    'id': tweet.id,
+                    'text': tweet.text
+                })
+    return results
+
+
 # Search recent tweets
-def search_tweets(client, query, max_results):
+def search_tweets_surface(client, query, max_results):
     start = datetime.today().strftime('%Y-%m-%dT') + '03:00:00Z'
     tweets = client.search_recent_tweets(query=query, max_results=max_results, start_time=start)
     tweet_data = tweets.data
@@ -54,7 +69,8 @@ def search_tweet_list(query, max_results):
     # Object of connection
     client = get_client()
     # Searching for tweets
-    tweets = search_tweets(client, query, max_results)
+    #tweets = search_tweets_surface(client, query, max_results)
+    tweets = search_tweets_user(client, query, max_results)
     # Creating list of tweets
     objs = []
     if len(tweets) > 0:
@@ -80,3 +96,7 @@ def tweet_to_publish(text, query):
     else:
         # if there are no posts on the day we create a new post
         return client.create_tweet(text=text)
+
+
+if __name__ == '__main__':
+    client = get_client()
